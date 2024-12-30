@@ -1,7 +1,17 @@
 import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
 import fastify from 'fastify'
+import fastifySwagger from '@fastify/swagger'
+import fastifySwaggerUi from '@fastify/swagger-ui'
+import {
+  jsonSchemaTransform,
+  serializerCompiler,
+  validatorCompiler,
+  ZodTypeProvider,
+} from 'fastify-type-provider-zod'
+
 import { env } from './env'
+
 import { createUserController } from './controllers/users/create-user'
 import { updateUserController } from './controllers/users/update-user'
 import fastifyCookie from '@fastify/cookie'
@@ -17,14 +27,11 @@ import { updateTransactionController } from './controllers/transactions/update-t
 import { deleteTransactionController } from './controllers/transactions/delete-transaction'
 import { findTransactionByIdController } from './controllers/transactions/find-transaction-by-id'
 import { fetchTransactionsController } from './controllers/transactions/fetch-all-transactions'
-import {
-  jsonSchemaTransform,
-  serializerCompiler,
-  validatorCompiler,
-  ZodTypeProvider,
-} from 'fastify-type-provider-zod'
-import fastifySwagger from '@fastify/swagger'
-import fastifySwaggerUi from '@fastify/swagger-ui'
+import { createBookingController } from './controllers/bookings/create-booking'
+import { deleteBookingController } from './controllers/bookings/delete-booking'
+import { fetchAllBookingsController } from './controllers/bookings/fetch-all-bookings'
+import { findBookingByIdController } from './controllers/bookings/find-booking-by-id'
+import { updateBookingController } from './controllers/bookings/update-booking'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -75,6 +82,13 @@ app.register(updateTransactionController)
 app.register(deleteTransactionController)
 app.register(findTransactionByIdController)
 app.register(fetchTransactionsController)
+
+// Bookings
+app.register(createBookingController)
+app.register(deleteBookingController)
+app.register(fetchAllBookingsController)
+app.register(findBookingByIdController)
+app.register(updateBookingController)
 
 app
   .listen({

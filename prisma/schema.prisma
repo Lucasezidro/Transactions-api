@@ -14,6 +14,7 @@ model User {
   password     String
   jobs         Job[]
   transactions Transaction[]
+  bookings     Booking[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -53,4 +54,29 @@ model Transaction {
   userId String
 
   @@map("transactions")
+}
+
+enum BookingStatus {
+  schedulling
+  processing
+  finished
+}
+
+model Booking {
+  id          String        @id @default(uuid())
+  title       String
+  description String
+  endDate     DateTime
+  status      BookingStatus @default(schedulling)
+  userId      String
+
+  amount   Int
+  isIncome Boolean
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("bookings")
 }
