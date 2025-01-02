@@ -55,9 +55,15 @@ export class InMemoryBookingsRepository implements BookingsRepository {
     }
   }
 
-  async fetchAll(userId: string): Promise<Booking[]> {
+  async fetchAll(
+    userId: string,
+    page: number,
+    perPage: number,
+  ): Promise<Booking[]> {
     const bookings = this.bookings.filter((item) => item.userId === userId)
+    const startIndex = (page - 1) * perPage
+    const endIndex = startIndex + perPage
 
-    return bookings
+    return bookings.slice(startIndex, endIndex)
   }
 }

@@ -42,11 +42,17 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
     return transaction
   }
 
-  async findAll(userId: string): Promise<Transaction[]> {
+  async findAll(
+    userId: string,
+    page: number,
+    perPage: number,
+  ): Promise<Transaction[]> {
     return await prisma.transaction.findMany({
       where: {
         userId,
       },
+      skip: (page - 1) * perPage,
+      take: perPage,
     })
   }
 }

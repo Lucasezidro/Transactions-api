@@ -8,5 +8,5 @@ export interface TransactionsRepository {
   delete(data: Transaction): Promise<void>
 
   findById(transactionId: string): Promise<Transaction | null>
-  findAll(userId: string): Promise<Transaction[]>
+  findAll(userId: string, page: number, perPage: number): Promise<Transaction[]>
 }

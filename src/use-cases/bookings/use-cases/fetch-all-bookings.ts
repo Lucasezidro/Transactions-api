@@ -3,6 +3,8 @@ import type { BookingsRepository } from '../../../repositories/bookings/bookings
 
 interface FetchAllBookingsRequest {
   userId: string
+  page: number
+  perPage: number
 }
 
 interface FetchAllBookingsResponse {
@@ -14,8 +16,14 @@ export class FetchAllBookingsUseCase {
 
   async execute({
     userId,
+    page,
+    perPage,
   }: FetchAllBookingsRequest): Promise<FetchAllBookingsResponse> {
-    const bookings = await this.bookingsRepository.fetchAll(userId)
+    const bookings = await this.bookingsRepository.fetchAll(
+      userId,
+      page,
+      perPage,
+    )
 
     return { bookings }
   }

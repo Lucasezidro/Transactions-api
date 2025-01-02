@@ -6,5 +6,5 @@ export interface BookingsRepository {
   delete(booking: Booking): Promise<void>
 
   findById(bookingId: string): Promise<Booking | null>
-  fetchAll(userId: string): Promise<Booking[]>
+  fetchAll(userId: string, page: number, perPage: number): Promise<Booking[]>
 }

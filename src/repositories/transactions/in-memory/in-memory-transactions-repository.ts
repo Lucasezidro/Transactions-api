@@ -55,11 +55,17 @@ export class InMemoryTransactionsRepository implements TransactionsRepository {
     return transaction
   }
 
-  async findAll(userId: string): Promise<Transaction[]> {
+  async findAll(
+    userId: string,
+    page: number,
+    perPage: number,
+  ): Promise<Transaction[]> {
     const transactions = this.transactions.filter(
       (item) => item.userId === userId,
     )
+    const startIndex = (page - 1) * perPage
+    const endIndex = startIndex + perPage
 
-    return transactions
+    return transactions.slice(startIndex, endIndex)
   }
 }

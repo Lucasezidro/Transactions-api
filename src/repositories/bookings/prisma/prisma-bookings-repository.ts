@@ -40,11 +40,17 @@ export class PrismaBookingsRepository implements BookingsRepository {
     return booking
   }
 
-  async fetchAll(userId: string): Promise<Booking[]> {
+  async fetchAll(
+    userId: string,
+    page: number,
+    perPage: number,
+  ): Promise<Booking[]> {
     return await prisma.booking.findMany({
       where: {
         userId,
       },
+      skip: (page - 1) * perPage,
+      take: perPage,
     })
   }
 }

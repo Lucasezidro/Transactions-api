@@ -3,6 +3,8 @@ import type { TransactionsRepository } from '../../../repositories/transactions/
 
 interface FetchAllTransactionsRequest {
   userId: string
+  page: number
+  perPage: number
 }
 
 interface FetchAllTransactionsResponse {
@@ -14,8 +16,14 @@ export class FetchAllTransactionsUseCase {
 
   async execute({
     userId,
+    page,
+    perPage,
   }: FetchAllTransactionsRequest): Promise<FetchAllTransactionsResponse> {
-    const transactions = await this.transactionsRepository.findAll(userId)
+    const transactions = await this.transactionsRepository.findAll(
+      userId,
+      page,
+      perPage,
+    )
 
     return { transactions }
   }
